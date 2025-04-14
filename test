@@ -1,0 +1,87 @@
+{
+  "entity": {
+    "name": "Customer Classification",
+    "short_name": "CUST_CL",
+    "description": "Used to define different classification types used to design customer data. Example: Customer Types – Individual, Corporate; Customer Name Types – First Name, Middle Name, Last Name; Customer ID Types – Aadhaar, Passport No, Driving License; Customer Address Type – First Line, Middle Line, Last Line"
+  },
+  "attributes": [
+    {
+      "attribute_name": "Customer Classification ID",
+      "short_name": "CSTCL_ID",
+      "data_type_size": "NUMBER(15)",
+      "description": "Classification ID which will be used in other tables to store the value"
+    },
+    {
+      "attribute_name": "Customer Classification Type",
+      "short_name": "CSTCL_TYP",
+      "data_type_size": "VARCHAR(100)",
+      "description": "Defines the Classification type"
+    },
+    {
+      "attribute_name": "Customer Classification Type Value",
+      "short_name": "CSTCL_TYP_VALUE",
+      "data_type_size": "VARCHAR(100)",
+      "description": "Defines the Classification Value"
+    },
+    {
+      "attribute_name": "Effective Date (Audit Field)",
+      "short_name": "CSTCL_EFCTV_DT",
+      "data_type_size": "DATE",
+      "description": "Date from when the data is effective from"
+    },
+    {
+      "attribute_name": "CRUD Value",
+      "short_name": "CSTCL_CRUD_VALUE",
+      "data_type_size": "CHAR(1)",
+      "description": "Logical status of the data: C - Created, U - Updated, D - Deleted"
+    },
+    {
+      "attribute_name": "User ID (Audit Field)",
+      "short_name": "CSTCL_USER_ID",
+      "data_type_size": "VARCHAR(100)",
+      "description": "User who created the data"
+    },
+    {
+      "attribute_name": "Workstation ID (Audit Field)",
+      "short_name": "CSTCL_WS_ID",
+      "data_type_size": "VARCHAR(100)",
+      "description": "Workstation from where the data is created"
+    },
+    {
+      "attribute_name": "Program ID (Audit Field)",
+      "short_name": "CSTCL_PRGM_ID",
+      "data_type_size": "VARCHAR(100)",
+      "description": "Program that inserted the data"
+    },
+    {
+      "attribute_name": "Host Timestamp (Audit Field)",
+      "short_name": "CSTCL_HOST_TS",
+      "data_type_size": "TIMESTAMP",
+      "description": "The timestamp when the record is inserted in the DB to be obtained in the program from the host"
+    },
+    {
+      "attribute_name": "Local Timestamp (Audit Field)",
+      "short_name": "CSTCL_LOCAL_TS",
+      "data_type_size": "TIMESTAMP",
+      "description": "The timestamp of the system that initiates the record i.e. the timestamp of the user workstation"
+    },
+    {
+      "attribute_name": "Acceptance Timestamp (Audit Field)",
+      "short_name": "CSTCL_ACPT_TS",
+      "data_type_size": "TIMESTAMP",
+      "description": "The timestamp when the record is accepted in the system"
+    },
+    {
+      "attribute_name": "Acceptance Timestamp UTC Offset (Audit Field)",
+      "short_name": "CSTCL_ACPT_TS_UTC_OFST",
+      "data_type_size": "TIMESTAMP",
+      "description": "The timestamp when the record is inserted in the DB to be obtained in the program from the host"
+    },
+    {
+      "attribute_name": "Universal Unique Identifier (UUID)",
+      "short_name": "CSTCL_UUID",
+      "data_type_size": "VARCHAR(100)",
+      "description": "System-generated ID used to uniquely identify the process that updated the records in the system"
+    }
+  ]
+}
