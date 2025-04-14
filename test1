@@ -1,0 +1,228 @@
+1. Resources and URI’s :
+In REST, a resource is a fundamental building block that represents a specific item of data, such as a customer, a
+product, or an order. Resources are identified by URIs (Uniform Resource Identifiers), which are unique addresses
+that can be used to access and manipulate the resource.
+• Identify Resources: Determine the main entities your API will manage (e.g., customer, products, orders).
+Use Nouns for URIs: Design URIs using nouns that represent resources.
+For example:
+o `GET /customer` - Retrieve a list of customers based on filter criteria
+o `POST /customer` - Create a new customer
+o `GET /customers/{id}` - Retrieve a specific customer
+o `PUT /customer/{id}` - Update a specific customer
+o `DELETE /customer/{id}` - Delete a specific customer
+
+2. HTTP Methods:
+For designing REST APIs, Each HTTP request includes a method, sometimes called “HTTP verbs,” that provides a
+lot of context for each call. Here’s a look at the most common HTTP methods:
+Use appropriate HTTP methods to perform actions:
+o GET: Retrieve data
+o POST: Create a new resource
+o PUT: Update an existing resource
+o PATCH: Partially update a resource
+o DELETE: Remove a resource
+
+3. Statelessness:
+Each request from a client should contain all the information needed to process that request. The server should
+not store the client context between requests.
+  
+4. Status Codes
+Use standard HTTP status codes to indicate the outcome of an API request. There are many more HTTP status
+codes to consider, but the below lists should cater to for most APIs.
+• 200: Successful request, often a GET
+• 201: Successful request after a create, usually a POST
+• 204: Successful request with no content returned, usually a PUT or PATCH
+• 301: Permanently redirect to another endpoint
+• 400: Bad request (client should modify the request)
+• 401: Unauthorized, credentials not recognized
+• 403: Forbidden, credentials accepted but don’t have permission
+• 404: Not found, the resource does not exist
+• 410: Gone, the resource previously existed but does not now
+• 429: Too many requests, used for rate limiting and should include retry headers
+• 500: Server error, generic and worth looking at other 500-level errors instead
+• 503: Service unavailable, another where retry headers are useful
+
+5. Versioning
+• Version your API to manage changes over time. Common practices include:
+• Using a version number in the URI (e.g., `/v1/users`)
+• Using a version number in request headers
+
+6. Filtering, Sorting, and Pagination
+Allow clients to filter results and sort them rather than creating redundant end points. Plan with smart parameters
+from the start
+
+• Filtering: Return only results that match a filter by using field ‘name’ as a parameter for customer
+search.Use the wildcard characters like “*”(Asterix) For example:
+GET /customer?name=John → Customers with Exact Match
+GET /customer?name=John* →Customer with wildcard filter
+• Pagination: Implement pagination for large datasets. Don’t overload clients and servers by providing
+everything. Instead, set a limit and provide prev and next links in the response
+- `GET /customer?age=25&sort=name&page=2&limit=10`
+• Sorting: Provide a way to sort or some use cases will still require paging through all results to find what’s
+needed, in which case it is better to sort in some order. Example:
+GET / customer?sort_by=name&order=asc
+  
+7. Documentation
+Provide clear and comprehensive documentation for the API. Tools like Swagger or Postman can help create
+interactive API documentation. It would contain all the information a developer needs to integrate with the API
+Implement authentication (e.g., OAuth, JWT) and authorization to protect the API. Use HTTPS to encrypt data
+Provide meaningful error messages and codes to help clients understand issues.
+  
+8. Security
+in transit.
+9. Error Handling
+10. Testing
+Test the API thoroughly to ensure it behaves as expected under various conditions.
+11. Cache Data
+Cache data to Improve Performance. Caching partially eliminates unnecessary trips to the server. Returning data
+from local memory rather than sending a query for each new request can improve your app’s
+performance. GET requests are cacheable by default, however, POST requests require you to specify the cache
+requirements in the header. Caching, however, can lead to stale data on the client’s browser. Here’s how you
+would deal with this in the POST header.
+
+  
+Layered Architecture Pattern:
+Layered architecture patterns are n-tiered patterns where the components are organized in horizontal layers. This is
+the traditional method for designing most software and is meant to be self-independent. This means that all the
+components are interconnected but do not depend on each other. This pattern organizes the system into layers, each
+with specific responsibilities, such as presentation, business logic, and data access. It promotes separation of
+concerns and makes the system easier to manage.
+
+There are four layers in this architecture where each layer has a connection between modularity and component
+within them. From top to bottom, they are:
+• The presentation layer: It contains all categories related to the presentation layer.
+• The business layer: It contains business logic.
+• The persistence layer: It’s used for handling functions like object-relational mapping
+• The database layer: This is where all the data is stored.
+In this instance the layers are closed, meaning a request must go through all layers from top to bottom. There are two
+reasons for this, one being that all ‘similar’ components are together and the other reason is that it provides layers of
+isolation.
+  
+To elaborate, having ‘similar’ components together means that everything relevant to a certain layer, stays
+in that single layer. This allows for a clean separation between types of components and also helps gather
+similar programming code together in one location. By isolating the layers, they become independent from
+one another. Thus if, for example, if one want to change the database from an Oracle server to a SQL
+server, this will cause a big impact on the database layer but that won’t impact any other layers. Likewise,
+suppose that one have a custom written business layer and want to change it for a business rules engine.
+The change won’t affect other layers if there is a well-defined layered architecture.
+
+  
+Springboot Flow Architecture
+To understand the spring boot flow architecture, lets break down how a typical spring boot application works from
+startup to handling a web request or API call , and its internal components.
+
+1. Spring Boot Application Startup
+  The lifecycle of a Spring Boot application begins when it starts running. This process can be broken into the
+  following key phases:
+  a. @SpringBootApplication Annotation
+  The Spring Boot application typically starts from a class annotated with @SpringBootApplication. This
+  annotation is a convenience that includes three crucial annotations:
+  • @SpringBootConfiguration: Defines this class as the configuration class.
+  • @EnableAutoConfiguration: Enables Spring Boot’s automatic configuration, which scans for components
+  and configures them automatically based on the project's classpath (e.g., when spring-boot-starter-web is
+  included, it automatically sets up an embedded web server).
+  • @ComponentScan: Scans the package and sub-packages where the main class is located for components like
+  @Controller, @Service, and @Repository.
+    
+  b. SpringApplication.run()
+  When SpringApplication.run() is invoked in the main method, the Spring Boot application:
+  • Initializes the Spring context.
+  • Loads configuration properties.
+  • Scans for Spring components (@Controller, @Service, etc.).
+  • Configures beans and dependencies via dependency injection.
+  • Starts the embedded web server (like Tomcat or Jetty) if it's a web application.
+  This automatic setup significantly reduces the amount of configuration code the developer needs to write.
+  Example:
+  @SpringBootApplication
+  public class MitDemoApplication {
+  public static void main(String[] args) throws IOException {
+  SpringApplication.run(MitDemoApplication.class, args);
+  }
+  }
+
+2. Request Handling Flow (MVC Architecture)
+  In a Spring Boot web application, handling web requests follows a Model-View-Controller (MVC) architecture.
+  Let’s walk through the flow of how a request is processed:
+  Below is the flowchart for Spring MVC Request Flow:
+  a. Client Request (HTTP Request)
+  When a client (usually a browser or a REST API client) sends an HTTP request to the application (e.g., a
+  GET request to /hello), the request enters the application through the embedded web server (Tomcat, Jetty,
+  etc.).
+  b. Front Controller (DispatcherServlet)
+  At the core of Spring MVC is the DispatcherServlet, which acts as a front controller that intercepts all incoming
+  HTTP requests and dispatches them to the appropriate handlers. It is automatically configured by Spring Boot.
+  DispatcherServlet intercepts the request. It consults the HandlerMapping, which contains mappings of URLs to
+  controllers, and finds the appropriate handler (usually a controller class and its method).
+  c. Controller Layer (@RestController or @Controller)
+  Once the request reaches the controller, Spring injects the request data (path variables, request parameters, or request
+  bodies) into the corresponding controller method. The controller processes the request, usually with the help of a
+  service layer, and returns a response.
+  • @Controller: Used for traditional web applications where the controller returns a view (e.g., an HTML
+  page).
+  • @RestController: A specialization of @Controller where each method returns data directly (like JSON or
+  XML), typically used for RESTful APIs. Please find the example below:
+  Example:
+  @RestController
+  public class CustomerController1 {
+  @GetMapping("/getCustomerDetails/{id}")
+  public StandardResponse<CustomerDetailsResponseDTO> getCustomerDetails(@PathVariable Long id)
+  {
+  StandardResponse<CustomerDetailsResponseDTO> response = new
+  StandardResponse<CustomerDetailsResponseDTO>();
+  response.setResponseOK();
+  response.setData(customerService.getCustomerDetails(id));
+  return response;
+  }
+  }
+  Here, /getCustomerDetails/{id} maps to the getCustomerDetails() method in the CustomerController, which
+  returns customer Details in response.
+  d. Service Layer (@Service)
+  The service layer contains the business logic. The controller often delegates work to the service layer, which
+  processes the core business logic and interacts with the repository or other services.
+  Example:
+  @Service
+  public class CustomerServiceImpl implements CustomerService {
+  @Override
+  public CustomerDetailsResponseDTO getCustomerDetails(Long id) {
+  CustomerDetails customerDetails = customerDetailsRepository.findBycustomerIdentifier(id);
+  CustomerDetailsResponseDTO customerDetailsResponseDTO =
+  customerServiceHelper.generateCustomerDetailsObjectForGet(customerDetails);
+  return customerDetailsResponseDTO;
+  }
+  }
+  e. Repository Layer (@Repository)
+  If the application interacts with a database, the service layer usually interacts with a repository. The
+  repository layer is where Spring Boot manages data access using interfaces that extend Spring Data
+  repositories like JpaRepository, CrudRepository, etc.
+  Example:
+  @Repository
+  public interface CustomerDetailsRepository extends JpaRepository<CustomerDetails, Long> {
+  // Custom database queries can be defined here
+  }
+  The repository interacts with the database (e.g., via JPA, JDBC, or Hibernate), handling CRUD operations
+  (Create, Read, Update, Delete).
+  f. Response Handling
+  Once the controller receives data from the service (and possibly the repository), it returns a response back to the
+  client.
+  • In RESTful applications, the response is typically in JSON or XML format.
+  • In traditional web applications, the response can be an HTML page (using @Controller and view
+  technologies like Thymeleaf).
+  • In the example above, the getCustomerDetails () method returns customer Details which is sent as an HTTP
+  response back to the client.
+    
+3. Spring Boot Auto-Configuration
+  One of Spring Boot’s most powerful features is auto-configuration. Spring Boot inspects the classpath and
+  configures the application based on the dependencies and beans found. For example: If Spring Web is found in the
+  classpath, Spring Boot automatically configures an embedded web server (like Tomcat) and MVC architecture. It
+  automatically configures a database connection and JPA repositories.This means developers don’t need to manually
+  define these components, and Spring Boot provides sensible defaults that can be customized if necessary.
+    
+4. Embedded Web Server
+  Spring Boot applications typically run on an embedded web server (like Tomcat or Jetty). This server is started
+  automatically when the application starts, and it listens for HTTP requests on a default port (usually 8080).
+  Spring Boot Flow Summary
+  Startup: @SpringBootApplication initializes the application.
+  Request Flow: Client sends an HTTP request, which is routed by the DispatcherServlet to the correct controller.
+  Controller: Receives the request, interacts with services, and returns a response.
+  Service Layer: Business logic is executed, often using the repository for data access.
+  Repository: Interacts with the database and returns the necessary data.
+  Response: The controller sends the response (JSON, XML, or HTML) back to the client.
